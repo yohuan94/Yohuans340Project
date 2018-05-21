@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+<head>
+<title>Black Skies Bomber Hunter</title>
+<link href="styles.css" rel="stylesheet" />
+<script src="jquery-3.2.1.min.js"></script>
+<script src="jquery.parallaxify.min.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="storageFunct.js"></script>
+<script src="e-smart-hittest-jquery.js"></script>
+<script>
+$(document).ready(function() { 
+	console.log(localStorage);
+	$('.startHidden, #explodedPlane, #goodBullets, #optionStart').hide();
+	$('.startHidden').delay(500).fadeIn(1500);
+	$('#background').css("background-image", "url(images/arvoground.jpg)");
+	$('#background2').css("background-image", "url(images/cloudtop.png)");
+	
+	function animateBomber() {
+		$('#enemyTarget').animate({'top':'20px'},3000).animate({'top':'240px'},3000, animateBomber);
+	}
+	animateBomber();
+	//checkStoryEvent();
+
+	//credits to http://hwthorn.github.io/parallaxify/
+	$('#background, #background2').parallaxify();
+	$.parallaxify({
+        horizontalParallax: true,
+        verticalParallax: true,
+        parallaxBackgrounds: true,
+        parallaxElements: true,
+        positionProperty: 'position',
+        responsive: false,
+        useMouseMove: true,
+        useGyroscope: true,
+        alphaFilter: 0.9,
+        motionType: 'natural',
+        mouseMotionType: 'gaussian',
+		inputPriority: 'mouse',	
+        motionAngleX: 80,
+        motionAngleY: 80,
+        adjustBasePosition: true,
+        alphaPosition: 0.05,
+    });
+
+	/* PLAYER MOUSE CONTROL */
+	var mouseX = 0, mouseY = 0, limitX = 850, limitY = 600;
+	$(window).mousemove(function(e){
+	  var offset = $('#stage').offset();
+	   mouseX = Math.min(e.pageX - offset.left, limitX);
+	   mouseY = Math.min(e.pageY - offset.top, limitY);
+	   if (mouseX < 0) mouseX = 0;
+	   if (mouseY < 0) mouseY = 0;
+	});
+	
+	var follower = $("#player");
+	var xp = 0, yp = 0;
+	var loop = setInterval(function(){
+	// change to alter damping higher is slower
+		xp += (mouseX - xp) / 50;
+		yp += (mouseY - yp) / 50;
+		follower.css({left:xp, top:yp});
+	}, 1);
+	
+	$(document).click(function() {
+		if(canShoot == true){
+			generateBullet();
+		}
+	});
+	
+	$(window).keydown(function (e) {
+		if (e.keyCode === 32 && canShoot == true) {
+			e.preventDefault();
+			generateBullet();
+			console.log('Space pressed')
+		}
+	})
+	
+	var bulletIDCounter = 0;
+	var canShoot = false;
+
+	function generateBullet() {
+		$('#player').append('<img id="bulletShot'+bulletIDCounter+'" class="bulletClass" src="images/goodbullets.png"/>');
+		$('#bulletShot'+bulletIDCounter)
+		.css({ 
+			position:'absolute',
+			right: $('#player').width()-220,
+			top: 25,
+		})
+		.animate({ 
+			right: -1000
+		},{ 
+			duration: getRandomInt(800,1000), 
+			easing: 'linear',
+			step: function() {
+				var hit = $('#enemyHitbox').objectHitTest({"object":$(this), "transparency":true});
+				if(hit) {
+					$('#enemyHP').animate({ 
+						width: '-=2px'
+					},{ 
+						duration: 50,
+						easing: 'linear'
+					})
+					$(this).fadeOut(100).remove();
+					if($('#enemyHP').css('width') == '0px') {
+						$('#textBox, #textNameBox').fadeIn(1000);
+						$(".textSd").html("That was close. Jammed...aghh! come on fly straight... Yeah shes quite broken we need to return for rearming and repairs.");
+						$('#textName').html("Hugo");
+						$('#textBox').click(function(event) {
+							setTimeout('window.location="page4.html" ', 1000);
+							$('.startHidden, .enemies, .bulletClass').fadeOut(1000);
+						})
+						$('#explodedPlane').fadeIn(300);
+						$('#enemyTarget').stop(function(animateBomber){}).fadeOut(300);
+						canShoot = false
+						endGame();
+						return;
+					}
+				}
+			},
+			complete: function() {
+				if($('#explodedPlane').is(":visible")){
+					$('#explodedPlane').finish().stop(function(){}).fadeOut(5000);
+				}
+				$(this).remove();
+			}
+		});
+		bulletIDCounter++;
+	}
+
+
+	/* START GAME */	
+	var timer;
+	
+	$('img').click(function() {
+		return false;
+	})
+	
+	$('#textBox').click(function(event) {
+		canShoot = true
+		$('#textBox, #textNameBox').hide();
+		if(!event.detail || event.detail == 1){
+		timer = setInterval(generateEnemy,333);
+		}
+	})
+
+	/* END GAME */
+	function endGame() {
+		clearInterval(timer);
+		$('.enemies, .bulletClass').stop().fadeOut(50);
+		$('#playerHP').stop();
+	}
+
+	/* GENERATE ENEMIES */
+	
+	var enemyIDCounter = 0;
+
+	function generateEnemy() {
+		$('#stage').append('<img id="enemy'+enemyIDCounter+'" class="enemies" src="images/bullets.png"/>');
+		$('#enemy'+enemyIDCounter)
+		.css({ 
+			position:'absolute',
+			left: $('#stage').width()+200,
+			top: getRandomInt(20,$('#stage').height()+50)
+		})
+		.animate({ 
+			left: -500
+		},{ 
+			duration: getRandomInt(4500,5000), 
+			easing: 'linear',
+			step: function() {
+				var hit = $('#player').objectHitTest({"object":$(this), "transparency":true});
+				if(hit) {
+					$('#playerHP').animate({ 
+						width: '-=40px'
+					},{ 
+						duration: 200, 
+						easing: 'linear'
+					})
+					$(this).fadeOut(100).remove();
+					if($('#playerHP').css('width') == '0px') {
+						$('#player').fadeOut(500);
+						$('.startHidden, #enemyTarget').stop(function(animateBomber){}).fadeOut(1000);
+						$('#optionStart').fadeIn(1000);
+						$('#optionStart').click(function() {
+							setTimeout('window.location="page3game.html" ', 1000);
+							$('#optionStart').fadeOut(1000);
+						});
+						canShoot = false
+						endGame();
+						return;
+					}
+				}
+			},
+			complete: function() {
+				$(this).remove();
+			}
+		});
+		enemyIDCounter++;
+	}
+
+	/* GENERATE RANDOM NUMBER */
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+})
+</script>
+</head>
+<body>
+	<div id="stage">
+		<div id="optionStart" class="optionButton"><p class="textHd">TRY AGAIN</p></div>
+		<div id="background" class="startHidden" data-parallaxify-background-range="25"></div>
+		<div id="background2" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="enemyTarget" class="startHidden" data-parallaxify-background-range="35" >
+			<div id="enemyHitbox"></div>
+		</div>
+		<div id="enemyHPContainer" class="startHidden">
+			<div id="enemyHP"></div>
+		</div>
+		<div id="playerHPContainer" class="startHidden">
+			<div id="playerHP"></div>
+		</div>
+		<div id="textNameBox" class="startHidden">
+			<p id="textName" class="textHd">Lorenz</p>
+		</div>
+		<div id="textBox" class="startHidden">
+			<p class="textSd">Careful Hugo! That huge things got a whole lot of defenses, dodge incoming fire with your mouse and shoot with space or left click! </p>
+		</div>
+		<div id="explodedPlane" data-parallaxify-background-range="35"></div>
+		<div id="player" class="startHidden"></div>
+		<div id="goodBullets"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,496 @@
+body{
+	margin: 0;
+	background-size: cover;
+	background-image: url("images/bodybackground.jpg");
+	background-color: rgba(0,0,0,1);
+}
+
+.textHd{
+	color: rgba(200,200,200,1);
+	float: left;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	letter-spacing: 0.5px;
+	font-size: 22px;
+	font-family: "Lucida Sans Typewriter";
+	text-shadow: 2px 2px 8px rgba(0,0,0,1);
+	position: relative;
+	margin:0 auto;
+}
+
+.textSd{
+	color: rgba(200,200,200,1);
+	float: left;
+	letter-spacing: 0.5px;
+	font-size: 18px;
+	font-family: "Lucida Sans Typewriter";
+	text-shadow: 2px 2px 8px rgba(0,0,0,1);
+	margin: 15px;
+}
+
+.textSdx{
+	color: rgba(100,100,100,1);
+	float: left;
+	letter-spacing: 0.5px;
+	font-size: 16px;
+	font-family: "Lucida Sans Typewriter";
+	text-shadow: 2px 2px 8px rgba(0,0,0,1);
+	margin: 15px;
+}
+
+b { 
+    font-weight: bold;
+	font-size: 22px;
+}
+
+#stage {
+	top: 48px;
+	width: 1200px;
+	height: 675px;
+	background-color: rgba(0,0,0,1);
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0px 0px 30px 10px rgba(0,0,0,0.75);
+}
+
+#background {
+	top: -30px;
+	left: -50px;
+	width: 1300px;
+	height: 731px;
+	background-size: cover;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/settingsky.jpg");
+}
+
+#background1 {
+	top: -70px;
+	left: -50px;
+	width: 1300px;
+	height: 800px;
+	background-size: cover;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/settingskycloud.png");
+}
+
+#background2 {
+	left: -50px;
+	width: 1300px;
+	height: 1000px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/arvoclouds.png");
+}
+
+#planeSquad {
+	top: 650px;
+	left: -350px;
+	width: 1800px;
+	height: 900px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/FW190squad.png");
+	z-index: 4;
+}
+
+#enemyFighter {
+	top: -150px;
+	right: 0px;
+	width: 100px;
+	height: 80px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/LA5side.png");
+	z-index: 5;
+}
+
+#enemySquad {
+	top: 100px;
+	left: 350px;
+	width: 160px;
+	height: 120px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/LA5squad.png");
+	z-index: 2;
+	cursor: pointer;
+}
+
+#enemySquad:hover {
+	background-image: url("images/LA5squadHL.png");
+}
+
+#fw190Title {
+	top: 110px;
+	left: 200px;
+	width: 800px;
+	height: 500px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/FW190side.png");
+	z-index: 1;
+}
+
+#speechPic {
+	width: 100px;
+	height: 100px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/speech.png");
+	position: absolute;
+	z-index: 5;
+}
+
+#titleLogo {
+	top: 100px;
+	left: 150px;
+	width: 900px;
+	height: 400px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/BlackSkiesLOGO.png");
+	position: absolute;
+	z-index: 2;
+}
+
+#textNameBox {
+	width: 300px;
+	height: 30px;
+	left: 100px;
+	bottom: 170px;
+	background-color: rgba(15,15,15,0.6);
+	box-shadow: 0px 0px 5px 5px rgba(15,15,15,0.6);
+	position: absolute;
+	z-index: 10;
+}
+
+#textBox {
+	width: 1000px;
+	height: 110px;
+	left: 100px;
+	bottom: 50px;
+	cursor: pointer;
+	background-color: rgba(15,15,15,0.6);
+	box-shadow: 0px 0px 5px 5px rgba(15,15,15,0.6);
+	position: absolute;
+	z-index: 10;
+}
+
+#textBox:hover {
+	background-color: rgba(15,15,15,0.6);
+	box-shadow: 0px 0px 5px 5px rgba(15,15,15,0.6);
+}
+
+#textBox:active {
+	background-color: rgba(0,0,0,0.6);
+	box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.6);
+}
+
+#textChecklist {
+	width: 180px;
+	height: 145px;
+	right: 25px;
+	top: 65px;
+	background-color: rgba(15,15,15,0.6);
+	box-shadow: 0px 0px 5px 5px rgba(15,15,15,0.6);
+	position: absolute;
+	z-index: 10;
+}
+
+#textChecklistName {
+	width: 180px;
+	height: 30px;
+	right: 25px;
+	top: 25px;
+	background-color: rgba(15,15,15,0.75);
+	box-shadow: 0px 0px 5px 5px rgba(15,15,15,0.75);
+	position: absolute;
+	z-index: 10;
+}
+
+#optionStart {
+	left: 390px;
+	top: 430px;
+}
+
+#optionBox1 {
+	left: 110px;
+	top: 360px;
+}
+
+#optionBox2 {
+	left: 670px;
+	top: 360px;
+}
+
+#personLorenz {
+	top: 150px;
+	left: 400px;
+	width: 450px;
+	height: 800px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/pLorenz.png");
+	position: absolute;
+	z-index: 9;
+}
+
+#personHugo {
+	top: 75px;
+	left: 400px;
+	width: 450px;
+	height: 800px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/pHugo.png");
+	position: absolute;
+	z-index: 9;
+}
+
+#personBerthold {
+	top: 150px;
+	left: 400px;
+	width: 450px;
+	height: 800px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/pBerthold.png");
+	position: absolute;
+	z-index: 9;
+}
+
+#personMechanic {
+	top: 150px;
+	left: 400px;
+	width: 450px;
+	height: 800px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/pMechanic.png");
+	position: absolute;
+	z-index: 9;
+}
+
+#personHans {
+	top: 150px;
+	left: 400px;
+	width: 450px;
+	height: 800px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/pHans.png");
+	position: absolute;
+	z-index: 9;
+}
+
+#personOfficer {
+	top: 150px;
+	left: 400px;
+	width: 450px;
+	height: 800px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/pOfficer.png");
+	position: absolute;
+	z-index: 9;
+}
+
+#buttonHangar {
+	top: 38px;
+	left: 707px;
+	width: 543px;
+	height: 332px;
+	cursor: pointer;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/AFhangar.png");
+	position: absolute;
+	z-index: 8;
+}
+
+#buttonHangar:hover {
+	background-image: url("images/AFhangarHL.png");
+}
+
+#buttonWorkshop {
+	top: 220px;
+	left: 346px;
+	width: 316px;
+	height: 160px;
+	cursor: pointer;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/AFworkshop.png");
+	position: absolute;
+	z-index: 8;
+}
+
+#buttonWorkshop:hover {
+	background-image: url("images/AFworkshopHL.png");
+}
+
+#buttonOffice {
+	top: 155px;
+	left: 66px;
+	width: 347px;
+	height: 218px;
+	cursor: pointer;
+	background-size: contain;
+    background-repeat: no-repeat;
+	background-image: url("images/AFoffice.png");
+	position: absolute;
+	z-index: 8;
+}
+
+#buttonOffice:hover {
+	background-image: url("images/AFofficeHL.png");
+}
+
+.optionButton:hover {
+	background-color: rgba(15,15,15,0.6);
+	box-shadow: 0px 0px 5px 5px rgba(15,15,15,0.6);
+}
+
+.optionButton:active {
+	background-color: rgba(0,0,0,0.6);
+	box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.6);
+}
+
+.optionButton {
+	z-index: 10;
+	width: 420px;
+	height: 50px;
+	cursor: pointer;
+	background-color: rgba(15,15,15,0.6);
+	box-shadow: 0px 0px 5px 5px rgba(15,15,15,0.6);
+	position: absolute;
+}
+
+.flakBlast {
+	background-size: contain;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/flakblast.png");
+	z-index: 2;
+}
+
+#flak1 {
+	top: 120px;
+	left: 920px;
+	width: 160px;
+	height: 160px;
+}
+
+#flak2 {
+	top: 190px;
+	left: 650px;
+	width: 200px;
+	height: 200px;
+}
+
+#flak3 {
+	top: 180px;
+	left: 340px;
+	width: 120px;
+	height: 120px;
+}
+
+#flak4 {
+	top: 150px;
+	left: 120px;
+	width: 170px;
+	height: 170px;
+}
+
+
+#explodedPlane {
+	top: 135px;
+	right: -50px;
+	width: 400px;
+	height: 400px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/blast.png");
+	z-index: 2;
+}
+
+#player {
+	top: 300px;
+	width: 120px;
+	height: 120px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/FW190top.png");
+	margin: -60px 0 0 -60px;
+	z-index: 2;
+}
+
+#playerHP {
+	width: 300px;
+	height: 25px;
+	background-color: rgba(255,35,35,0.6);
+	position: absolute;
+	z-index: 3;
+}
+#playerHPContainer {
+	width: 300px;
+	height: 25px;
+	background-color: rgba(15,15,15,0.6);
+	box-shadow: 0px 0px 5px 5px rgba(15,15,15,0.6);
+	border: 2px solid rgba(255,35,35,0.6);
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	z-index: 3;
+}
+
+#enemyTarget {
+	top: 120px;
+	right: 25px;
+	width: 260px;
+	height: 420px;
+	background-size: contain;
+    background-repeat: no-repeat;
+	position: absolute;
+	background-image: url("images/PE8top.png");
+	z-index: 2;
+}
+
+#enemyHitbox {
+	top: 25px;
+	left: 100px;
+	width: 150px;
+	height: 360px;
+	position: absolute;
+	z-index: 2;
+}
+
+#enemyHP {
+	width: 300px;
+	height: 25px;
+	background-color: rgba(255,35,35,0.6);
+	position: absolute;
+	z-index: 3;
+}
+#enemyHPContainer {
+	width: 300px;
+	height: 25px;
+	background-color: rgba(15,15,15,0.6);
+	box-shadow: 0px 0px 5px 5px rgba(15,15,15,0.6);
+	border: 2px solid rgba(255,35,35,0.6);
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	z-index: 3;
+}

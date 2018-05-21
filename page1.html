@@ -1,0 +1,254 @@
+<!doctype html>
+<html>
+<head>
+<title>Black Skies</title>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<script src="jquery-3.2.1.min.js"></script>
+<script src="jquery.parallaxify.min.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="storageFunct.js"></script>
+<script>
+$(document).ready(function() {
+	$('.startHidden, .optionButton, .flakBlast, #explodedPlane').hide();
+	$('#background').delay(500).fadeIn(1000);
+	$('#textBox').delay(5000).fadeIn(1000);
+	$('#planeSquad').delay(1000).fadeIn(1000).animate({
+		top: '-=350px',
+		left: '+=425px',
+        height: '-=450px',
+        width: '-=750px',
+		easing:'easeOutSine'
+    },3000);
+	$('#background').css("background-image", "url(images/arvohorizon.jpg)");
+	$(".textSd").html("Out in the eastern front. Russian forces have pushed into German territories...");
+
+	
+	//credits to http://hwthorn.github.io/parallaxify/
+	$('#background, #planeSquad').parallaxify();
+	$.parallaxify({
+        horizontalParallax: true,
+        verticalParallax: true,
+        parallaxBackgrounds: true,
+        parallaxElements: true,
+        positionProperty: 'position',
+        responsive: false,
+        useMouseMove: true,
+        useGyroscope: true,
+        alphaFilter: 0.9,
+        motionType: 'natural',
+        mouseMotionType: 'gaussian',
+		inputPriority: 'mouse',	
+        motionAngleX: 80,
+        motionAngleY: 80,
+        adjustBasePosition: true,
+        alphaPosition: 0.05,
+    });
+	var state = 0;
+	
+	$('#enemySquad').click(function() {
+		state = 11;
+	});
+	
+	var timer = null;
+	var minNumber = 1900;
+	var maxNumber = 3000
+
+	var randomNumber = randomNumberFromRange(minNumber, maxNumber);
+
+	function randomNumberFromRange(min,max)
+	{
+		return Math.floor(Math.random()*(max-min+1)+min);
+	}
+
+	$('#textBox, #enemySquad, #optionBox1, #optionBox2').click(function() {
+		switch(state) {
+			case 0:
+				$(".textSd").html("Alright squad, listen up. Past this river is the enemy front lines, watch each others backs and expect heavy enemy resistance. This is going to be no leisure flight boys.");
+				$('#textName').html("Squad Leader");
+				$("#speechPic").css({top: 220, left: 575});
+				$('#textNameBox, #speechPic').fadeIn(500)
+				state += 1;
+				break;
+			case 1:
+				$(".textSd").html("Solid Copy!");
+				$('#textName').html("Hugo");
+				$("#speechPic").css({top: 260, left: 775});
+				state += 1;
+				break;
+			case 2:
+				$(".textSd").html("Yes sir! Eyes in the skies.");
+				$('#textName').html("Lorenz");
+				$("#speechPic").css({top: 260, left: 375});
+				state += 1;
+				break;
+			case 3:
+				$(".textSd").html("Copy That!");
+				$('#textName').html("Berthold");
+				$("#speechPic").css({top: 300, left: 175});
+				state += 1;
+				break;
+			case 4:
+				$(".textSd").html("Roger!");
+				$('#textName').html("Hans");
+				$("#speechPic").css({top: 300, left: 975});
+				state += 1;
+				break;
+			case 5:
+				$(".textSd").html("...");
+				$('#background2').fadeIn(1000);
+				$('#textNameBox, #speechPic').fadeOut(500);
+				state += 1;
+				break;
+			case 6:
+				$('#textNameBox, #speechPic').fadeIn(500);
+				$(".textSd").html("Lots of cloud ahead, We won't see a thing.");
+				$('#textName').html("Lorenz");
+				$("#speechPic").css({top: 260, left: 375});
+				state += 1;
+				break;
+			case 7:
+				$(".textSd").html("Stay alert squad, the enemy could be waiting for us. Be ready for anything.");
+				$('#textName').html("Squad Leader");
+				$("#speechPic").css({top: 220, left: 575});
+				state += 1;
+				break;
+			case 8:
+				$(".textSd").html("Hurensohn! they got alot of anti-air fire watch it!");
+				$('#textName').html("Hugo");
+				$("#speechPic").css({top: 260, left: 775});
+				function animateFlak() {
+					$('#flak2, #flak4').fadeIn(200).fadeOut(randomNumber,animateFlak);
+				}
+				animateFlak();
+				function animateFlak1() {
+					$('#flak1, #flak3').delay(1000).fadeIn(150).fadeOut(randomNumber,animateFlak1);
+				}
+				animateFlak1();
+				state += 1;
+				break;
+			case 9:
+				$(".textSd").html("What is that sound? Can't see a thing with these blasts and clouds!");
+				$('#textName').html("Berthold");
+				$("#speechPic").css({top: 300, left: 175});
+				$('#background2').fadeTo('slow', 0, function(){
+					$('#background2').css({width: 3000, height: 2000, top: -180, left: -1400});
+				}).fadeTo('slow', 1);
+				state += 1;
+				break;
+			case 10:
+				$(".textSd").html("...Theres something around need to find it...");
+				$('#enemySquad').fadeIn(1000);
+				$('#textNameBox, #speechPic').finish().fadeOut(1000);
+				break;
+			case 11:
+				$(".textSd").html("Enemy Fighters!!!");
+				$('#textName').html("Hugo");
+				$('.flakBlast').stop(function(animateFlak,animateFlak1){}).fadeOut(1000);
+				$("#textNameBox").fadeIn(1000)
+				$("#speechPic").fadeIn(1000).css({top: 260, left: 775});
+				state += 1;
+				break;
+			case 12:
+				$(".textSd").html("Squad! form up a-");
+				$('#textName').html("Squad Leader");
+				$("#fw190Title").delay(1500).fadeIn(1000).css({
+					"background-image":"url(images/FW190side1.png)",
+					transform: 'rotate(-15deg)',
+					width:350,
+					height:300,
+					top:210,
+					left:525
+				});
+				$('#enemySquad, #background2').delay(1000).fadeOut(500);
+				$('#background').delay(1000).fadeTo('slow', 0, function(){
+					$('#background').css("background-image", "url(images/arvohorizon1.jpg)");
+				}).fadeTo('slow', 1);
+				$('#planeSquad').delay(1000).fadeTo('slow', 0, function(){
+					$('#planeSquad').css({'background-image':'url(images/FW190squadHD.png)', transform: 'rotate(-15deg)', top: 250,});
+				}).fadeTo('slow', 1);
+				$('#textNameBox, #speechPic, #textBox').fadeOut(0).delay(1500).fadeIn(1000);
+				$("#speechPic").fadeIn(1000).css({top: 140, left: 660});
+				state += 1;
+				break;
+			case 13:				
+				$(".textSd").html("Squadron Leader! Nooo!");
+				$('#textName').html("Lorenz");
+				$("#explodedPlane").css({
+					width:350,
+					height:350,
+					top:160,
+					left:460
+				}).delay(1000).fadeIn(100).fadeOut(3000);
+				$("#enemyFighter").css({transform:'rotate(-30deg)'}).show().delay(500).animate({
+					top: 900,
+					right: 1600,
+					width: '+=500px',
+					height: '+=500px' 
+				},{ duration: 3500 });
+				$('#textNameBox, #speechPic, #textBox').fadeOut(0).delay(1500).fadeIn(1000);
+				$("#fw190Title").delay(1000).animate({top: 800,left: '-=300px',},{ duration: 2500 });
+				$("#speechPic").css({top: 230, left: 370});
+				state += 1;
+				break;
+			case 14:
+				$("#fw190Title").fadeOut(100);
+				$(".textSd").html("They have altitude advantage here! Form up on me, we are taking these bastards down!");
+				$('#textName').html("Hugo"); 
+				$("#speechPic").fadeIn(1000).css({top: 250, left: 680});
+				state += 1;
+				break;
+			case 15:
+				$(".textSd").html("God damn it! The Captain didn't even have time to evade, a perfect dive attack...");
+				$('#textName').html("Berthold");
+				$("#speechPic").fadeIn(1000).css({top: 300, left: 150});
+				state += 1;
+				break;
+			case 16:
+				$(".textSd").html("We have bigger problems! Don't fall behind!");
+				$('#textName').html("Hans");
+				$("#planeSquad").delay(500).animate({
+					top: '-=600px',
+					left: '+=1000px',
+				},{ duration: 3000 }).fadeOut(1000);
+				$("#speechPic").css({top: 420, left: 700}).delay(500).fadeOut(500);
+				state += 1;
+				break;
+			case 17:
+				$('.startHidden').fadeOut(1000)
+				$("#planeSquad").finish().fadeOut(1000)
+				setTimeout('window.location="page2.html" ', 1000);
+				break;
+		}
+	})
+});
+</script>
+</head>
+<body>
+	<div id="stage">
+		<div id="background" class="startHidden" data-parallaxify-background-range="15"></div>
+		<div id="background2" class="startHidden" data-parallaxify-background-range="25" ></div>
+		<div id="planeSquad" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="fw190Title" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="speechPic" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="enemySquad" class="startHidden" data-parallaxify-background-range="30" ></div>
+		<div id="enemyFighter" class="startHidden" data-parallaxify-background-range="30" ></div>
+		<div id="flak1" class="flakBlast" data-parallaxify-background-range="28" ></div>
+		<div id="flak2" class="flakBlast" data-parallaxify-background-range="28" ></div>
+		<div id="flak3" class="flakBlast" data-parallaxify-background-range="28" ></div>
+		<div id="flak4" class="flakBlast" data-parallaxify-background-range="28" ></div>
+		<div id="explodedPlane" data-parallaxify-background-range="35"></div>
+		<div id="optionBox1" class="optionButton"><p id="optionText1" class="textHd"></p></div>
+		<div id="optionBox2" class="optionButton"><p id="optionText2" class="textHd"></p></div>
+		<div id="personLorenz" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="personHugo" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="personBerthold" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="personHans" class="startHidden" ></div>
+		<div id="textNameBox" class="startHidden">
+			<p id="textName" class="textHd"></p>
+		</div>
+		<div id="textBox" class="startHidden">
+			<p class="textSd"></p>
+		</div>
+	</div>
+</body>
+</html>

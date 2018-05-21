@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<title>Black Skies Office</title>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<script src="jquery-3.2.1.min.js"></script>
+<script src="jquery.parallaxify.min.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="storageFunct.js"></script>
+<script>
+$(document).ready(function() {
+	console.log(localStorage);
+	$('.startHidden, .optionButton').hide();
+	$('#background').delay(500).fadeIn(1000);
+	$('#textBox').delay(500).fadeIn(1000);
+	$('#enemySquad').css({"background-image":"url(images/itemTools.png)" ,transform: 'rotate(0deg)', top:360, left: 650, width: 150, height: 150}).delay(500).fadeIn(1000);
+	$('#background').css("background-image", "url(images/roomoffice.jpg)");
+	$(".textSd").html("Tools should be in here somewhere. Let's not disturb the officers..");
+	
+	checkStoryEvent();
+	
+	//credits to http://hwthorn.github.io/parallaxify/
+	$.parallaxify({
+        horizontalParallax: true,
+        verticalParallax: true,
+        parallaxBackgrounds: true,
+        parallaxElements: true,
+        positionProperty: 'position',
+        responsive: false,
+        useMouseMove: true,
+        useGyroscope: true,
+        alphaFilter: 0.9,
+        motionType: 'natural',
+        mouseMotionType: 'gaussian',
+		inputPriority: 'mouse',	
+        motionAngleX: 80,
+        motionAngleY: 80,
+        adjustBasePosition: true,
+        alphaPosition: 0.05,
+    });
+	
+	$('#enemySquad').click(function() {
+		localStorage.setItem('itemTool', 'true');
+		$('#optionStart').fadeIn(1000);
+		$(this).fadeOut(1000);
+		$(".textSd").html("Found them!");
+	});
+	
+	$("#optionStart").click(function() {
+		$('.startHidden').fadeOut(1000);
+		$(this).fadeOut(1000);
+		setTimeout('window.location="page5airfield.html" ', 2000);
+	});
+});
+</script>
+</head>
+<body>
+	<div id="stage">
+		<div id="background" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="optionStart" class="optionButton"><p class="textHd">Exit Building</p></div>
+		<div id="enemySquad" class="startHidden" data-parallaxify-background-range="25" ></div>
+		<div id="textChecklistName" class="startHidden"><p class="textHd">Item list</p></div>
+		<div id="textBox" class="startHidden">
+			<p class="textSd"></p>
+		</div>
+	</div>
+</body>
+</html>

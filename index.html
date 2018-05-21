@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<title>Black Skies Main</title>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<script src="jquery-3.2.1.min.js"></script>
+<script src="jquery.parallaxify.min.js"></script>
+<script>
+$(document).ready(function() {
+	$('.startHidden, .optionButton').hide();
+	$('#optionStart, #background, #background1, #titleLogo, #fw190Title').delay(500).fadeIn(1000);
+	
+	//credits to http://hwthorn.github.io/parallaxify/
+	$('#background, #background1, #fw190Title').parallaxify();
+	$.parallaxify({
+        // enable parallax effect for horizontal, vertical or both directions
+        horizontalParallax: true,
+        verticalParallax: true,
+        // enable or disable parallax effect for elements or backgrounds
+        parallaxBackgrounds: true,
+        parallaxElements: true,
+        // set which positioning property is to be used
+        // options include 'position' or 'transform' using css transformations
+        positionProperty: 'position',
+        // enable for responsive layouts
+        // (upon orientation changes or window resizing element positions are reevaluated
+        responsive: false,
+        // enable or disable mouse or gyroscope data as input for the plugin
+        useMouseMove: true,
+        useGyroscope: true,
+        // use a Low Pass Filter to smooth sensor readings (1 = no filter)
+        alphaFilter: 0.9,
+        // set which motion type algorithm is to be used
+        // options include 'natural', 'linear', 'gaussian', or 'performance'
+        motionType: 'natural',
+        mouseMotionType: 'gaussian',
+        // define which sensor input has priority over the other
+        // options are either 'mouse' or 'gyroscope'
+		inputPriority: 'mouse',	
+        // define the delta angle (0 < motionAngle < 90) 
+        // that is used to render max parallax in this direction
+        motionAngleX: 80,
+        motionAngleY: 80,
+        // enable of adjustment of base position (using a Low Pass Filter)
+        // (adapting to device usage while plugin is running)
+        adjustBasePosition: true,
+        // alpha for Low Pass Filter used to adjust average position
+        alphaPosition: 0.05,
+    });
+
+	
+	var state = 0;
+	
+	$("#optionStart").click(function() {
+		$('.optionButton, #titleLogo').fadeOut(600);
+		$('#textBox').fadeIn(800);
+	});
+	
+	$('#optionBox1').click(function() {
+		state = 1;
+	});
+				
+	$('#optionBox2').click(function() {
+		state = 3;
+	});
+	
+	$('#textBox, #optionBox1, #optionBox2').click(function() {
+		switch(state) {
+			case 0:
+				$('#optionStart').fadeOut(600,function() {});
+				$(".textSd").html("This game should be run in Google Chrome or Firefox for the best results.");
+				state += 1;
+				break;
+			case 1:
+				$('#optionBox1, #optionBox2').fadeOut(600,function() {});
+				$(".textSd").html("This game features dialogue options and clickable items. Be sure not to miss them as they can give you interesting responses and events.");
+				state += 1;
+				break;
+			case 2:
+				$(".textSd").html("These buttons above are dialogue options. Clicking on either will give you different responses.");
+				$('#optionBox1, #optionBox2').fadeIn(600,function() {});
+				$('#optionText1').html("Take me back!");
+				$('#optionText2').html("Let us move on!");
+				break;
+			case 3:
+				$('#optionBox1, #optionBox2').fadeOut(600,function() {});
+				$(".textSd").html("We shall move on. Start when you are ready.");
+				$('#optionStart').fadeIn(800);
+				$('#optionStart').click(function() {
+					$('#optionStart, .startHidden').fadeOut(600);
+					setTimeout('window.location="page1.html" ', 600);
+				});
+				break;
+		} 		
+	})
+});
+</script>
+</head>
+<body>
+	<div id="stage">
+		<div id="background" class="startHidden" data-parallaxify-background-range="20" ></div>
+		<div id="background1" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="fw190Title" class="startHidden" data-parallaxify-background-range="50" ></div>
+		<div id="titleLogo" class="startHidden"></div>
+		<div id="optionStart" class="optionButton"><p class="textHd">START CAMPAIGN</p></div>
+		<div id="optionBox1" class="optionButton"><p id="optionText1" class="textHd"></p></div>
+		<div id="optionBox2" class="optionButton"><p id="optionText2" class="textHd"></p></div>
+		<div id="textBox" class="startHidden">
+			<p class="textSd">This box here is where all the dialogue and messages will be displayed. You can click on this text box to continue or skip messages. Try it now </p>
+		</div>
+	</div>
+</body>
+</html>

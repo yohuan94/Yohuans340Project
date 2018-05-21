@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+<title>Black Skies</title>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<script src="jquery-3.2.1.min.js"></script>
+<script src="jquery.parallaxify.min.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="storageFunct.js"></script>
+<script>
+$(document).ready(function() {
+	console.log(localStorage);
+	$('.startHidden, .optionButton, .flakBlast, #explodedPlane').hide();
+	$('#background, #personMechanic').delay(500).fadeIn(1000);
+	$('#textBox, #textNameBox').delay(500).fadeIn(1000);
+	$("#speechPic").delay(500).fadeIn(1000).css({top: 50, left: 600});
+	$('#background').css("background-image", "url(images/airfieldFW190.jpg)");
+	$(".textSd").html("Oh? Looks like your back... and that trolley with a mess behind you. Im assuming those are the things i requested?");
+	$('#textName').html("Mechanic");
+
+	//checkStoryEvent();
+	
+	//credits to http://hwthorn.github.io/parallaxify/
+	$.parallaxify({
+        horizontalParallax: true,
+        verticalParallax: true,
+        parallaxBackgrounds: true,
+        parallaxElements: true,
+        positionProperty: 'position',
+        responsive: false,
+        useMouseMove: true,
+        useGyroscope: true,
+        alphaFilter: 0.9,
+        motionType: 'natural',
+        mouseMotionType: 'gaussian',
+		inputPriority: 'mouse',	
+        motionAngleX: 80,
+        motionAngleY: 80,
+        adjustBasePosition: true,
+        alphaPosition: 0.05,
+    });
+	var state = 0;
+
+
+	$('#textBox, #optionBox1, #optionBox2').click(function() {
+		switch(state) {
+			case 0:
+				$(".textSd").html("You guessed correct, here you go. I'll let you get back to work.");
+				$('#textName').html("Hugo");
+				$('#personHugo').fadeIn(1000);
+				$('#personMechanic').fadeOut(1000);
+				state += 1
+				break;
+			case 1:
+				$(".textSd").html("I'll get to it then. Come by tomorrow morning.");
+				$('#textName').html("Hugo");
+				$('#personHugo').fadeOut(1000);
+				$('#personMechanic').fadeIn(1000);
+				state += 1
+				break;
+			case 2:
+				$(".textSd").html("So Hugo...I mean captain now! Why were you running around the airfield today?");
+				$('#textName').html("Lorenz");
+				$('#personLorenz').fadeIn(1000);
+				$('#personMechanic').fadeOut(1000);
+				if (localStorage.getItem('hanDeath') == 'true') {
+					state = 4
+				} else {
+					state = 3
+				};
+				break;
+			case 3:
+				$(".textSd").html("Yeah captain you looked busy today working off a good sweat");
+				$('#textName').html("Hans");
+				$('#personLorenz').fadeOut(1000);
+				$('#personHans').fadeIn(1000);
+				state += 1
+				break;
+			case 4:
+				$(".textSd").html("You guys were too busy standing around being useless watching me work.");
+				$('#textName').html("Hugo");
+				$('#personLorenz, #personHans').fadeOut(1000);
+				$('#personHugo').fadeIn(1000);
+				state += 1
+				break;
+			case 5:
+				$(".textSd").html("I know you, ya would have asked us if you really needed help. But yeah captain th-... oh?");
+				$('#textName').html("Berthold");
+				$('#personHugo').fadeOut(1000);
+				$('#personBerthold').fadeIn(1000);
+				state += 1
+				break;
+			case 6:
+				$(".textSd").html("Gather up men! as of today we are officially on the defence. The Soviets have moved inland on our east and the Allies have pushed through the west!");
+				$('#textName').html("Major General");
+				$('#personOfficer').delay(500).fadeIn(1000);
+				$('#personBerthold').fadeOut(1000);
+				$('#background').fadeTo('slow', 0, function(){
+					$('#background').css({'background-image':'url(images/airfieldhangar.jpg)'});
+				}).fadeTo('slow', 1);
+				state += 1;
+				break;
+			case 7:
+				$(".textSd").html("Alright. Attention everyone on the airfield! Right now as i speak we have emergency requests for all pilots available to head to Berlin within 15 hours. Reports say a previously unseen amount of bombers are on its way to raid Berlin.");
+				state += 1
+				break;
+			case 8:
+				$(".textSd").html("The americans have sent a thousand bombers on its way to Berlin right now. I want all you pilots to prepare yourselves for Berlins defence!");
+				state += 1
+				break;
+			case 9:
+				$(".textSd").html("Normally just going into a handful of bombers, all your sins would flash before your eyes, but at a thousand bombers! All i can say now is this will be a suicide mission for many pilots, but we have a duty to uphold! That is all you are all dismissed");
+				state += 1
+				break;
+			case 10:
+				$(".textSd").html("Well i don't have until tomorrow morning, I better get back to work...");
+				$('#textName').html("Mechanic");
+				$('#personOfficer').fadeOut(1000);
+				$('#personMechanic').fadeIn(1000);
+				state += 1
+				break;
+			case 11:
+				$(".textSd").html("Alright squad we better assist the mechanics, its all we can do at the moment before a thousand bombers arrive in Berlin...");
+				$('#textName').html("Hugo");
+				$('#personMechanic').fadeOut(1000);
+				$('#personHugo').fadeIn(1000);
+				state += 1
+				break;
+			case 12:
+				$(".textSd").html("A thousand bombers... We barely made it out from a skirmish with 2 dozens");
+				$('#textName').html("Lorenz");
+				$('#personLorenz').fadeIn(1000);
+				$('#personHugo').fadeOut(1000);
+				if (localStorage.getItem('hanDeath') == 'true') {
+					state = 14
+				} else {
+					state = 13
+				};
+				break;
+			case 13:
+				$(".textSd").html("Damn. This is definitely a suicide mission it was nice knowing you men");
+				$('#textName').html("Hans");
+				$('#personLorenz').fadeOut(1000);
+				$('#personHans').fadeIn(1000);
+				state += 1
+				break;
+			case 14:
+				$(".textSd").html("Of to war guys...");
+				$('#textName').html("Berthold");
+				$('#personHugo, #personHans').fadeOut(1000);
+				$('#personBerthold').fadeIn(1000);
+				state += 1
+				break;
+		}
+	})
+});
+</script>
+</head>
+<body>
+	<div id="stage">
+		<div id="background" class="startHidden" data-parallaxify-background-range="15"></div>
+		<div id="background2" class="startHidden" data-parallaxify-background-range="25" ></div>
+		<div id="planeSquad" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="fw190Title" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="optionBox1" class="optionButton"><p id="optionText1" class="textHd"></p></div>
+		<div id="optionBox2" class="optionButton"><p id="optionText2" class="textHd"></p></div>
+		<div id="speechPic" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="personHugo" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="personMechanic" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="personHans" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="personBerthold" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="personLorenz" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="personOfficer" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="textNameBox" class="startHidden">
+			<p id="textName" class="textHd"></p>
+		</div>
+		<div id="textBox" class="startHidden">
+			<p class="textSd"></p>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!doctype html>
+<html>
+<head>
+<title>Black Skies</title>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<script src="jquery-3.2.1.min.js"></script>
+<script src="jquery.parallaxify.min.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="storageFunct.js"></script>
+<script>
+$(document).ready(function() {
+	console.log(localStorage);
+	$('.startHidden, .optionButton, .flakBlast, #explodedPlane').hide();
+	$('#background').delay(500).fadeIn(1000);
+	$('#textBox, #textNameBox, #speechPic').delay(1000).fadeIn(1000);
+	$('#background').css("background-image", "url(images/arvohorizon.jpg)");
+	$('#textName').html("Squad Leader");
+	if (localStorage.getItem('hanDeath') == 'true') {
+		$("#fw190Title").delay(500).fadeIn(1000).css({"background-image":"url(images/FW190squadHAN.png)" ,transform: 'rotate(0deg)', top:120, left: 100, width: 900, height: 550, zIndex:4, position:'absolute'});
+		$("#speechPic").delay(500).fadeIn(500).css({top: 300, left: 650});
+	} else {
+		$("#fw190Title").delay(500).fadeIn(1000).css({"background-image":"url(images/FW190squadHD.png)" ,transform: 'rotate(0deg)', top:120, left: 100, width: 900, height: 550, zIndex:4, position:'absolute'});
+		$("#speechPic").delay(500).fadeIn(500).css({top: 320, left: 700});
+	};
+	$(".textSd").html("Those Petlyakov's were huge beasts! how'd you manage that alone?");
+	$('#textName').html("Lorenz");
+	$('#background2').delay(500).fadeIn(1000).css({"background-image":"url(images/arvoclouds.png)",top:25, left: -50, width: 1300, height: 800});
+
+	//checkStoryEvent();
+	
+	//credits to http://hwthorn.github.io/parallaxify/
+	$.parallaxify({
+        horizontalParallax: true,
+        verticalParallax: true,
+        parallaxBackgrounds: true,
+        parallaxElements: true,
+        positionProperty: 'position',
+        responsive: false,
+        useMouseMove: true,
+        useGyroscope: true,
+        alphaFilter: 0.9,
+        motionType: 'natural',
+        mouseMotionType: 'gaussian',
+		inputPriority: 'mouse',	
+        motionAngleX: 80,
+        motionAngleY: 80,
+        adjustBasePosition: true,
+        alphaPosition: 0.05,
+    });
+	var state = 0;
+	var timer = null;
+	var minNumber = 1900;
+	var maxNumber = 3000
+
+	$('#optionBox1').click(function() {
+		state = 15;
+	});
+				
+	$('#optionBox2').click(function() {
+		state = 13;
+	});
+
+	$('#textBox, #optionBox1, #optionBox2').click(function() {
+		switch(state) {
+			case 0:
+				if (localStorage.getItem('hanDeath') == 'true') {
+					$(".textSd").html("Got lucky, didn't have a bomber suprise me from clouds and having twice the amount of guns pointed at me. Hans was unlucky...");
+					$("#speechPic").css({top: 120, left: 700});
+				} else {
+					$(".textSd").html("Shot till the guns jammed, and some luck i guess");
+					$("#speechPic").css({top: 160, left: 700});
+				};
+				$('#textName').html("Hugo");
+				state += 1;
+				break;
+			case 1:
+				if (localStorage.getItem('hanDeath') == 'true') {
+					$(".textSd").html("Yeah... We should've regrouped, he might've made it.");
+					$("#speechPic").css({top: 110, left: 300});
+				} else {
+					$(".textSd").html("It didn't look good on the ground, quite a few of those bombers made it to thier targets.");
+					$("#speechPic").css({top: 50, left: 410});
+				};
+				$('#textName').html("Berthold");
+				state += 1;
+				break;
+			case 2:
+				if (localStorage.getItem('hanDeath') == 'true') {
+					$(".textSd").html("Come on guys, we did real good work. We managed to kill twice the bombers than other squads could manage.");
+					$("#speechPic").css({top: 300, left: 650});
+					state = 4;
+					
+				} else {
+					$(".textSd").html("Come on boys we still did decent work. Managed to take out quite a few before they got in range.");
+					$("#speechPic").css({top: 320, left: 700});
+					state = 3;
+				};
+				$('#textName').html("Lorenz");
+				break;
+			case 3:
+				$(".textSd").html("I got some nice shots in some of them... My left aileron just broke off, great...");
+				$('#textName').html("Hans");
+				$("#speechPic").css({top: 50, left: 200});
+				state += 1;
+				break;
+			case 4:
+				$(".textSd").html("Alright men, lets hurry back. It would be bad if enemies find us now when we're dry on ammo and barely flying.");
+				$('#textName').html("Hugo");
+				if (localStorage.getItem('hanDeath') == 'true') {
+					$("#speechPic").css({top: 120, left: 700});
+				} else {
+					$("#speechPic").css({top: 160, left: 700});
+				};
+				state += 1;
+				break;
+			case 5:
+				if (localStorage.getItem('hanDeath') == 'true') {
+					$(".textSd").html("I'm cracking a cold one for Hans and the Captain when we get back! Lets go!");
+					$("#speechPic").css({top: 300, left: 650});
+					
+				} else {
+					$(".textSd").html("Lets go! Need a cold one when we get back.");
+					$("#speechPic").css({top: 320, left: 700});
+				};
+				$('#textName').html("Lorenz");
+				$("#speechPic").fadeOut(500);
+				$('#fw190Title').animate({top:0, left: 1400,},{ duration: 3000 });
+				state += 1;
+				break;
+			case 6:
+				$('#background2, #fw190Title').finish().fadeOut(1000);
+				$('#textBox, #textNameBox').fadeOut(0).delay(1500).fadeIn(1000);
+				$(".textSd").html("Run way is clear! You guys are clear for landing.");
+				$('#textName').html("Air Control");
+				$('#background').delay(1000).fadeTo('slow', 0, function(){
+					$('#background').css({'background-image':'url(images/arvoairfield.jpg)'});
+				}).fadeTo('slow', 1);
+				state += 1;
+				break;
+			case 7:
+				$(".textSd").html("Leading for landing! Flaps, hole in my rudder is not helping!");
+				$('#textName').html("Hugo");
+				$("#speechPic").css({top: 260, left: 775});
+				$('#planeSquad').fadeIn(0).css({
+					"background-image":"url(images/FW190side1.png)",
+					top: 450,
+					left: -450,
+					width: 250,
+					height: 200
+				}).animate({
+					top: 320,
+					left: 1050,
+					width: 100,
+					height: 75,
+					easing:'swing'
+				},{ duration: 4000 });
+				state += 1;
+				break;
+			case 8:
+				$('#planeSquad').finish().fadeOut(1500);
+				$('#textNameBox').fadeOut(0)
+				$('#textBox').fadeOut(0).delay(1500).fadeIn(1000);
+				$(".textSd").html("The next day. On the grounds of the Eastern Air Force HQ, Germany. Repairs on Hugos fighter in progress...");
+				$('#background').delay(1000).fadeTo('slow', 0, function(){
+					$('#background').css({'background-image':'url(images/airfieldFW190.jpg)'});
+				}).fadeTo('slow', 1);
+				state += 1;
+				break;
+			case 9:
+				$(".textSd").html("What kind of fighting did you guys get into to get it like this? All that needs replacing...");
+				$('#textName').html("Mechanic");
+				$('#textNameBox').fadeIn(500);
+				$("#speechPic").fadeIn(1000).css({top: 50, left: 600});
+				$('#personMechanic').fadeIn(1000);
+				state += 1
+				break;
+			case 10:
+				$(".textSd").html("We ran into alot more Russians then one might expect in a day.");
+				$('#textName').html("Hugo");
+				$('#personHugo').fadeIn(1000);
+				$('#personMechanic').fadeOut(1000);
+				state += 1
+				break;
+			case 11:
+				$(".textSd").html("Well, after fiddling around, you're going to need a whole new radiator...ah a pain to install, new hoses, some leads, and i'm going to need some tools.");
+				$('#textName').html("Mechanic");
+				$('#personHugo').fadeOut(1000);
+				$('#personMechanic').fadeIn(1000);
+				state += 1
+				break;
+			case 12:
+				$(".textSd").html("So if you are not too busy, can you go fetch these parts for me? Heres a list by the way, how you get it is up to you. Just! don't mention my name.");
+				$('#textName').html("Mechanic");
+				$('#optionBox1, #optionBox2').fadeIn(500);
+				$('#optionText1').html("Yeah i got this");
+				$('#optionText2').html("Your Assistants?");
+				break;
+			case 13:
+				$(".textSd").html("Ah... so why not get your assistants to get you the parts? and why the secrecy?");
+				$('#textName').html("Hugo");
+				$('#optionBox1, #optionBox2').fadeOut(500);
+				$('#personHugo').fadeIn(1000);
+				$('#personMechanic').fadeOut(1000);
+				state += 1
+				break;
+			case 14:
+				$(".textSd").html("My assistants are too busy repairing your friends aircrafts, because you all fly too damn rough. Most of these have less then half the service life they were supposed to have. And... thats a long story i'll tell you later.");
+				$('#textName').html("Mechanic");
+				$('#personHugo').fadeOut(1000);
+				$('#personMechanic').fadeIn(1000);
+				state += 1
+				break;
+			case 15:
+				$(".textSd").html("Alright, alright if its that bad ill go fetch you the parts. I'll be back when i find these parts... well if i can.");
+				$('#textName').html("Hugo");
+				$('#optionBox1, #optionBox2').fadeOut(500);
+				$('#personHugo').fadeIn(1000);
+				$('#personMechanic').fadeOut(1000);
+				state += 1
+				break;
+			case 16:
+				$(".textSd").html("Good luck! And make sure you get that socket set.");
+				$('#textName').html("Mechanic");
+				$('#personHugo').fadeOut(1000);
+				$('#personMechanic').fadeIn(1000);
+				state += 1
+				break;
+			case 17:
+				$('.startHidden').fadeOut(1000)
+				setTimeout('window.location="page5airfield.html" ', 2000);
+				break;
+		}
+	})
+});
+</script>
+</head>
+<body>
+	<div id="stage">
+		<div id="background" class="startHidden" data-parallaxify-background-range="15"></div>
+		<div id="background2" class="startHidden" data-parallaxify-background-range="25" ></div>
+		<div id="planeSquad" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="fw190Title" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="optionBox1" class="optionButton"><p id="optionText1" class="textHd"></p></div>
+		<div id="optionBox2" class="optionButton"><p id="optionText2" class="textHd"></p></div>
+		<div id="speechPic" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="personHugo" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="personMechanic" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="textNameBox" class="startHidden">
+			<p id="textName" class="textHd"></p>
+		</div>
+		<div id="textBox" class="startHidden">
+			<p class="textSd"></p>
+		</div>
+	</div>
+</body>
+</html>

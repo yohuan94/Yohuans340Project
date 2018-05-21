@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<title>Black Skies</title>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<script src="jquery-3.2.1.min.js"></script>
+<script src="jquery.parallaxify.min.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="storageFunct.js"></script>
+<script>
+$(document).ready(function() {
+	console.log(localStorage);
+	$('.startHidden, .optionButton, #textChecklistName').hide();
+	$('#background, #buttonHangar, #buttonWorkshop, #buttonOffice').delay(500).fadeIn(1000);
+	$('#textBox, #textChecklist, #textChecklistName').delay(500).fadeIn(1000);
+	$('#background').css("background-image", "url(images/airfieldhangar.jpg)");
+	if (localStorage.getItem('itemRadiator') == 'true' && localStorage.getItem('itemHose') == 'true' && localStorage.getItem('itemTool') == 'true') {
+		$("#optionStart").delay(500).fadeIn(1000);
+		$(".textSd").html("Thats all of it! now i should return before its too late.");
+	}
+	if (localStorage.getItem('hanDeath') == 'true') {
+		$("#personHans").fadeOut(0);
+	} else {
+		$("#personHans").delay(500).fadeIn(1000).css({"background-image":"url(images/pHans.png)" , top: 320, left: 600, width: 130, height: 250});
+	};
+	$("#personBerthold").delay(500).fadeIn(1000).css({"background-image":"url(images/pBerthold.png)" , top: 320, left: 800, width: 130, height: 250})
+	$("#personLorenz").delay(500).fadeIn(1000).css({"background-image":"url(images/pLorenz.png)" , top: 330, left: 700, width: 130, height: 250})
+	$('#background2').delay(500).fadeIn(1000).css({"background-image":"url(images/arvoclouds.png)",top:25, left: -50, width: 1300, height: 800});
+	
+	checkStoryEvent();
+	
+	//credits to http://hwthorn.github.io/parallaxify/
+	$.parallaxify({
+        horizontalParallax: true,
+        verticalParallax: true,
+        parallaxBackgrounds: true,
+        parallaxElements: true,
+        positionProperty: 'position',
+        responsive: false,
+        useMouseMove: true,
+        useGyroscope: true,
+        alphaFilter: 0.9,
+        motionType: 'natural',
+        mouseMotionType: 'gaussian',
+		inputPriority: 'mouse',	
+        motionAngleX: 80,
+        motionAngleY: 80,
+        adjustBasePosition: true,
+        alphaPosition: 0.05,
+    });
+	
+	$('#buttonHangar').click(function() {
+		$('.startHidden').fadeOut(1000)
+		setTimeout('window.location="pageHangar.html" ', 2000);
+	});
+	$('#buttonWorkshop').click(function() {
+		$('.startHidden').fadeOut(1000)
+		setTimeout('window.location="pageWorkshop.html" ', 2000);
+	});
+	$('#buttonOffice').click(function() {
+		$('.startHidden').fadeOut(1000)
+		setTimeout('window.location="pageOffice.html" ', 2000);
+	});
+	
+	$("#optionStart").click(function() {
+		$('.startHidden').fadeOut(1000);
+		$(this).fadeOut(1000);
+		setTimeout('window.location="page6.html" ', 2000);
+	});
+});
+</script>
+</head>
+<body>
+	<div id="stage">
+		<div id="background" class="startHidden" data-parallaxify-background-range="20"></div>
+		<div id="buttonHangar" class="startHidden" data-parallaxify-background-range="20" ></div>
+		<div id="buttonWorkshop" class="startHidden" data-parallaxify-background-range="20" ></div>
+		<div id="buttonOffice" class="startHidden" data-parallaxify-background-range="20" ></div>
+		<div id="speechPic" class="startHidden" data-parallaxify-background-range="35" ></div>
+		<div id="optionBox1" class="optionButton"><p id="optionText1" class="textHd"></p></div>
+		<div id="optionBox2" class="optionButton"><p id="optionText2" class="textHd"></p></div>
+		<div id="personLorenz" class="startHidden" data-parallaxify-background-range="23"></div>
+		<div id="personHugo" class="startHidden" data-parallaxify-background-range="23"></div>
+		<div id="personBerthold" class="startHidden" data-parallaxify-background-range="23"></div>
+		<div id="personHans" class="startHidden" data-parallaxify-background-range="23"></div>
+		<div id="personMechanic" class="startHidden" data-parallaxify-background-range="23"></div>
+		<div id="optionStart" class="optionButton"><p class="textHd">Return to Mechanic</p></div>
+		<div id="textChecklistName" class="startHidden"><p class="textHd">Item list</p></div>
+		<div id="textChecklist" class="startHidden">
+			<p id="textRadiator" class="textSdx">Radiator</p>
+			<p id="textHose" class="textSdx">Hoses & Wires</p>
+			<p id="textTool" class="textSdx">Tools</p>
+		</div>
+		<div id="textNameBox" class="startHidden">
+			<p id="textName" class="textHd"></p>
+		</div>
+		<div id="textBox" class="startHidden">
+			<p class="textSd">Should check out those three facilities ahead...</p>
+		</div>
+	</div>
+</body>
+</html>
